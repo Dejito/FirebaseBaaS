@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157701750865",
+    "project_id": "skillfulchat",
+    "storage_bucket": "skillfulchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157701750865:android:f933fa7cf95feedd237870",
+        "android_client_info": {
+          "package_name": "com.example.firebase_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaPgtQVuC5C-6HLRPYxoWeUVTMl0RP36g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
