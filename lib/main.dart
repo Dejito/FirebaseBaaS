@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
         backgroundColor: Colors.pink,
         hintColor: Colors.deepPurple,
+        highlightColor: Colors.deepPurpleAccent,
         brightness: Brightness.light,
         buttonTheme: ButtonTheme.of(context).copyWith(
           buttonColor: Colors.pink,
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
               child: Text("Something went wrong! ${snapshot.toString()}."),
             );
           } else if (snapshot.hasData) {
-            return  const AuthScreen();
+            return  const ChatScreen();
           } else {
             return Center(
               child: Text(snapshot.toString()),

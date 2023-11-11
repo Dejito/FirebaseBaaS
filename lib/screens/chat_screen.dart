@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_chat/widget/chat/messages.dart';
+import 'package:firebase_chat/widget/chat/new_message.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -6,44 +9,41 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fireStore = FirebaseFirestore.instance;
+    // final fireStore = FirebaseFirestore.instance;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chats"),
-      ),
-      body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: StreamBuilder(
-            stream: fireStore
-                .collection("chat/WyLC7SqQqZTn2aQDIhvy/messages")
-                .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Something went wrong!"),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            items: const [
+              DropdownMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.exit_to_app),
+                    SizedBox(width: 8),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+            ],
+            onChanged: (itemIdentifier) {
+              if (itemIdentifier == 'logout') {
+                FirebaseAuth.instance.signOut();
               }
-              final documents = snapshot.data?.docs;
-              return ListView.builder(
-                itemBuilder: (context, i) => Text(documents?[i]['text']),
-                itemCount: documents?.length,
-              );
             },
-          )),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          fireStore.collection("chat/WyLC7SqQqZTn2aQDIhvy/messages").add(
-            {
-              'text': 'can see tomorrow'
-            },
-          );
-        },
+          ),
+        ],
+      ),
+      body: const Column(
+        children: [
+          Expanded(child: Messages()),
+          NewMessage()
+        ],
       ),
     );
   }
