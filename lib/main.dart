@@ -1,3 +1,4 @@
+import 'package:firebase_chat/screens/auth_screen.dart';
 import 'package:firebase_chat/screens/chat_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.pink,
+        backgroundColor: Colors.pink,
+        hintColor: Colors.deepPurple,
+        brightness: Brightness.light,
+        buttonTheme: ButtonTheme.of(context).copyWith(
+          buttonColor: Colors.pink,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
       home: FutureBuilder(
         future: fApp,
@@ -34,7 +44,7 @@ class MyApp extends StatelessWidget {
               child: Text("Something went wrong! ${snapshot.toString()}."),
             );
           } else if (snapshot.hasData) {
-            return  const ChatScreen();
+            return  const AuthScreen();
           } else {
             return Center(
               child: Text(snapshot.toString()),

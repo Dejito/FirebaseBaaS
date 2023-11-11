@@ -14,9 +14,11 @@ class ChatScreen extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.all(16),
           child: StreamBuilder(
-            stream: fireStore.collection("chat/WyLC7SqQqZTn2aQDIhvy/messages")
+            stream: fireStore
+                .collection("chat/WyLC7SqQqZTn2aQDIhvy/messages")
                 .snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong!"),
@@ -27,20 +29,22 @@ class ChatScreen extends StatelessWidget {
                 );
               }
               final documents = snapshot.data?.docs;
-                return ListView.builder(itemBuilder: (context, i) =>
-                 Text(documents?[i]['text']),
-                  itemCount: documents?.length,
-                );
-
+              return ListView.builder(
+                itemBuilder: (context, i) => Text(documents?[i]['text']),
+                itemCount: documents?.length,
+              );
             },
-          )
-
-
+          )),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          fireStore.collection("chat/WyLC7SqQqZTn2aQDIhvy/messages").add(
+            {
+              'text': 'can see tomorrow'
+            },
+          );
+        },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //   },
-      // ),
     );
   }
 }
