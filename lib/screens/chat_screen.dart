@@ -12,27 +12,35 @@ class ChatScreen extends StatelessWidget {
         title: const Text("Chats"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView.builder(itemBuilder: (context, i) =>
-            const Text("T'emi tomi leru"),
-          itemCount: 2,
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
+          padding: const EdgeInsets.all(16),
+          child: StreamBuilder(
+            stream: fireStore.collection("chat/WyLC7SqQqZTn2aQDIhvy/messages")
+                .snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text("Something went wrong!"),
+                );
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final documents = snapshot.data?.docs;
+                return ListView.builder(itemBuilder: (context, i) =>
+                 Text(documents?[i]['text']),
+                  itemCount: documents?.length,
+                );
 
-        onPressed: () {
-          fireStore.collection("chat/WyLC7SqQqZTn2aQDIhvy/messages")
-              .snapshots().listen((event) {
-                event.docs.forEach((element) {
-                  print(element.data().values);
-                });
+            },
+          )
 
-          });
-          //     .forEach((element) {
-          //   print(element);
-          // });
-        },
+
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //   },
+      // ),
     );
   }
 }

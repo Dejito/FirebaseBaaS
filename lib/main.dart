@@ -26,28 +26,22 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Wagbayi"),
-        ),
-        body:  FutureBuilder(
-          future: fApp,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasError) {
-              return  Center(
-                child: Text("Something went wrong! ${snapshot.toString()}."),
-              );
-            } else if (snapshot.hasData) {
-              return  const ChatScreen();
-            } else {
-              return Center(
-                child: Text(snapshot.toString()),
-              );
-            }
-          },
-          // child: const ChatScreen()),
-        ),
-
+      home: FutureBuilder(
+        future: fApp,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasError) {
+            return  Center(
+              child: Text("Something went wrong! ${snapshot.toString()}."),
+            );
+          } else if (snapshot.hasData) {
+            return  const ChatScreen();
+          } else {
+            return Center(
+              child: Text(snapshot.toString()),
+            );
+          }
+        },
+        // child: const ChatScreen()),
       ),
     );
   }
