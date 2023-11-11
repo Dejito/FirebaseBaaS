@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,28 +16,34 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final FirebaseAuth? auth = FirebaseAuth.instance;
   UserCredential? userCredential;
-  FirebaseFirestore? fireStore;
+  FirebaseFirestore? firestore;
   bool _isLoading = false;
 
   void tryLogin(String email, String username, String password, bool isLogin,
       BuildContext ctx) async {
-
     try {
       setState(() {
         _isLoading = true;
       });
       if (!isLogin) {
-
         userCredential = await auth?.createUserWithEmailAndPassword(
-            email: email, password: password);
-        fireStore
-            ?.collection('users')
-            .doc(userCredential?.user?.uid)
-            .set({'username': username});
+          email: email,
+          password: password,
+        );
+        if (kDebugMode) {
+          print("user cred is $userCredential");
+        }
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc('usernames').collection(userCredential!.user!.uid)
+            .add({
+          'username': username,
+          'email': email,
+        });
+        // print("object ${b.toString()}");
         setState(() {
           _isLoading = false;
         });
-
       } else {
         userCredential = await auth?.signInWithEmailAndPassword(
             email: email, password: password);
