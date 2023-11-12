@@ -24,9 +24,9 @@ class Messages extends StatelessWidget {
             stream: FirebaseFirestore.instance
                 .collection('chat')
                 .orderBy(
-              'createdAt',
-              descending: true,
-            )
+                  'createdAt',
+                  descending: true,
+                )
                 .snapshots(),
             builder: (ctx, chatSnapshot) {
               if (chatSnapshot.connectionState == ConnectionState.waiting) {
@@ -46,4 +46,5 @@ class Messages extends StatelessWidget {
             });
       },
     );
-  }}
+  }
+}

@@ -24,7 +24,7 @@ class NewMessageState extends State<NewMessage> {
 
     });
     _controller.clear();
-    print("user id is >>>>> ${user.uid}");
+    // print("user id is >>>>> ${user.uid}");
   }
 
   @override
