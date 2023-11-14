@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble(this.message,
-      this.isMe, {super.key});
+      this.isMe, this.username, {super.key});
 
   final String message;
   final bool isMe;
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -13,38 +14,53 @@ class MessageBubble extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(
-            color: isMe ? Colors.grey[300] : Theme
-                .of(context)
-                .highlightColor,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(12),
-              topRight: const Radius.circular(12),
-              bottomLeft: !isMe ? const Radius.circular(0) : const Radius
-                  .circular(12),
-              bottomRight: isMe ? const Radius.circular(0) : const Radius
-                  .circular(12),
-            ),
-          ),
-          width: 140,
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 16,
-          ),
-          margin: const EdgeInsets.symmetric(
-            vertical: 4,
-            horizontal: 8,
-          ),
-          child: Text(
-            message,
-            style: TextStyle(
-              color: isMe
-                  ? Colors.black
-                  : Colors.white,
-            ),
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            // mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              Text(username,
+
+              // textAlign: isMe ? TextAlign.end : TextAlign.start,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: isMe ? Colors.grey[300] : Theme
+                      .of(context)
+                      .highlightColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(12),
+                    topRight: const Radius.circular(12),
+                    bottomLeft: !isMe ? const Radius.circular(0) : const Radius
+                        .circular(12),
+                    bottomRight: isMe ? const Radius.circular(0) : const Radius
+                        .circular(12),
+                  ),
+                ),
+                width: 140,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 4,
+                  horizontal: 0,
+                ),
+                child: Text(
+                  message,
+                  style: TextStyle(
+                    color: isMe
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
 }
+
+// final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
