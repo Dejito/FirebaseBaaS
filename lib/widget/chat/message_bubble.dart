@@ -62,5 +62,3 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
-
-// final userData = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();

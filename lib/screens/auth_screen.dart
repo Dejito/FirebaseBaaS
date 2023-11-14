@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../widget/auth/auth_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   FirebaseFirestore? firestore;
   bool _isLoading = false;
 
-  void tryLogin(String email, String username, String password, bool isLogin,
+  void tryLogin(String email, String username, String password, File image, bool isLogin,
       BuildContext ctx) async {
     try {
       setState(() {
@@ -30,9 +32,11 @@ class _AuthScreenState extends State<AuthScreen> {
           email: email,
           password: password,
         );
-        if (kDebugMode) {
-          print("user cred is $userCredential");
-        }
+
+        final ref = FirebaseStorage.instance.ref().child('user_image').child('${userCredential!.user!.uid}.jpg');
+
+       await ref.putFile(image);
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc('usernames').collection(userCredential!.user!.uid)
@@ -40,7 +44,6 @@ class _AuthScreenState extends State<AuthScreen> {
           'username': username,
           'email': email,
         });
-        // print("object ${b.toString()}");
         setState(() {
           _isLoading = false;
         });
