@@ -23,11 +23,10 @@ class NewMessageState extends State<NewMessage> {
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
-      'userName': userData.docs[0]['username']
-
+      'userName': userData.docs[0]['username'],
+      'userImage': userData.docs[0]['imageUrl']
     });
     _controller.clear();
-    // print("user id is >>>>> ${user.uid}");
   }
 
   @override

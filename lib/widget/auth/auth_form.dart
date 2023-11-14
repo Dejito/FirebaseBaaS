@@ -28,10 +28,11 @@ class _AuthFormState extends State<AuthForm> {
 
   // final BuildContext
   void _trySubmit() async {
-    if (_userImage == null && _isLogin) {
+    if (_userImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select an image"),
+         SnackBar(
+          content: const Text("Please select an image"),
+          backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
       return;

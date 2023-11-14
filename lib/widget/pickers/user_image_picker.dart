@@ -21,8 +21,10 @@ class UserImagePickerState extends State<UserImagePicker> {
   void _pickImage() async {
     final pickedImage = await _imagePicker.pickImage(source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.front,
+      imageQuality: 50,
+      maxWidth: 150
     );
-    print('picked image is >>>>>> $_pickedImage');
+    // print('picked image is >>>>>> $_pickedImage');
     setState(() {
       _pickedImage = File(pickedImage!.path);
     });
