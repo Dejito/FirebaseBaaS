@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_chat/screens/auth_screen.dart';
 import 'package:firebase_chat/screens/chat_screen.dart';
+import 'package:firebase_chat/widget/firebase_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
+    await FirebaseApi().initNotifications();
     runApp(const MyApp());
     WidgetsFlutterBinding.ensureInitialized();
   } catch (e) {
